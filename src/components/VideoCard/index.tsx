@@ -1,14 +1,18 @@
 import React from 'react';
 
-import {View, Text} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
-import { Container } from './styles';
+import {Container} from './styles';
 
-const VideoCard = ({title, imgUrl, id}) => {
+const VideoCard = ({title, imgUrl, id, onNavigate}) => {
     return (
         <Container key={`item ${id}`}>
-            <Text>aa ${title}</Text>
-            <Text>${imgUrl}</Text>
+            <TouchableOpacity onPress={() => onNavigate(imgUrl)}>
+                <Image
+                    source={{uri: imgUrl, width: 'auto', height: 200, scale: 1}}
+                />
+            </TouchableOpacity>
+            <Text>{title}</Text>
         </Container>
     );
 };

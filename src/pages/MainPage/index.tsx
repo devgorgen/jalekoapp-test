@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {View, Text, FlatList} from 'react-native';
 import VideoCard from '../../components/VideoCard';
 import SearchButtom from '../../components/SearchButtom';
-
 
 //https://github.com/react-native-video/react-native-video
 import Video from 'react-native-video';
@@ -21,37 +20,50 @@ const Item = ({title}) => (
 /**
  * Principal page
  * */
-const MainPage = () => {
-
+const MainPage = ({navigation}) => {
     const [data, setData] = useState([]);
     const videoPlayer = useRef(null);
     useEffect(() => {
         const files = getVideos('jaleko');
-        files.then(response => {
-            const videoData = [];
-            response.data.items.map(item => {
-                const video = {
-                    id: item.id.videoId,
-                    title: item.snippet.title,
-                    description: item.snippet.description,
-                    publishTime: item.snippet.publishTime,
-                    thumbnails: item.snippet.thumbnails,
-                    chanelId: item.snippet.chanelId,
-                };
+        files
+            .then(response => {
+                const videoData = [];
+                response.data.items.map(item => {
+                    const video = {
+                        id: item.id.videoId,
+                        title: item.snippet.title,
+                        description: item.snippet.description,
+                        publishTime: item.snippet.publishTime,
+                        thumbnails: item.snippet.thumbnails,
+                        chanelId: item.snippet.chanelId,
+                    };
 
-                videoData.push(video);
+                    videoData.push(video);
+                });
+
+                setData(videoData);
+            })
+            .catch(error => {
+                console.log(error);
             });
-
-            setData(videoData);
-
-        })
-        .catch(error => {
-            console.log(error);
-        });
-
     }, []);
 
-    const renderItem = ({item}) => <VideoCard title={item.title}  imgUrl={item.description} id={item.id}/>;
+    const navegateToVideoPlayer = imageUrl => {
+        console.log(`navigate to vp with ${imageUrl}`);
+        navigation.navigate('VideoPlayer');
+    };
+
+    const renderItem = ({item}) => {
+        console.log(item.thumbnails);
+        return (
+            <VideoCard
+                title={item.title}
+                imgUrl={item.thumbnails.medium.url}
+                id={item.id}
+                onNavigate={navegateToVideoPlayer}
+            />
+        );
+    };
 
     return (
         <Container>
