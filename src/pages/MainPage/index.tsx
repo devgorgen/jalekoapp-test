@@ -1,19 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {View, Text, FlatList} from 'react-native';
-import VideoComponent from '../../components/VideoComponent';
+import VideoCard from '../../components/VideoCard';
+
+//https://github.com/react-native-video/react-native-video
+import Video from 'react-native-video';
 
 import {getVideos} from '../../services/repositories';
 
 //styled-components
 import {Container} from './styles';
-
-const data = [
-    {id: 1034, title: 'Video 1', imgUrl: 'http://www.google.com'},
-    {id: 5341, title: 'Video 2', imgUrl: 'http://www.google.com'},
-    {id: 5232, title: 'Video 3', imgUrl: 'http://www.google.com'},
-    {id: 2333, title: 'Video 4', imgUrl: 'http://www.google.com'},
-    {id: 4235, title: 'Video 5', imgUrl: 'http://www.google.com'},
-];
 
 const Item = ({title}) => (
     <View>
@@ -25,20 +20,36 @@ const Item = ({title}) => (
  * Principal page
  * */
 const MainPage = () => {
-    // const renderItem = ({item}) => (
-    //     <View style={{width: '75%'}}>
-    //         <VideoComponent
-    //             title={item.title}
-    //             imgUrl={item.imgUrl}
-    //             id={item.id}
-    //         />
-    //     </View>
-    // );
+
+    const [data, setData] = useState([]);
+    const videoPlayer = useRef(null);
     useEffect(() => {
-        getVideos('jaleko');
+        const files = getVideos('jaleko');
+        files.then(response => {
+            const videoData = [];
+            response.data.items.map(item => {
+                const video = {
+                    id: item.id.videoId,
+                    title: item.snippet.title,
+                    description: item.snippet.description,
+                    publishTime: item.snippet.publishTime,
+                    thumbnails: item.snippet.thumbnails,
+                    chanelId: item.snippet.chanelId,
+                };
+
+                videoData.push(video);
+            });
+
+            setData(videoData);
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
     }, []);
 
-    const renderItem = ({item}) => <Item title={item.title} />;
+    const renderItem = ({item}) => <VideoCard title={item.title}  imgUrl={item.description} id={item.id}/>;
 
     return (
         <Container>
