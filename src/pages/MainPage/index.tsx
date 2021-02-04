@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {View, Text, FlatList} from 'react-native';
 import VideoCard from '../../components/VideoCard';
+import SearchButtom from '../../components/SearchButtom';
+
 
 //https://github.com/react-native-video/react-native-video
 import Video from 'react-native-video';
@@ -53,6 +55,7 @@ const MainPage = () => {
 
     return (
         <Container>
+            <SearchButtom />
             <FlatList
                 data={data}
                 keyExtractor={video => `${video.id}`}
