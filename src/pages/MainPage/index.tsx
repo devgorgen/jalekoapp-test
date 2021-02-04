@@ -70,7 +70,7 @@ const MainPage = ({navigation}) => {
             <SearchButtom />
             <FlatList
                 data={data}
-                keyExtractor={video => `${video.id}`}
+                keyExtractor={video => String(video.id)}
                 renderItem={renderItem}
             />
         </Container>

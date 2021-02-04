@@ -1,6 +1,9 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
+import {Provider} from 'react-redux';
+import store from './store';
+
 import {View, Text} from 'react-native';
 
 import MainPage from './pages/MainPage';
@@ -16,11 +19,13 @@ const Stack = createStackNavigator();
  */
 export default function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={MainPage} />
-                <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Home">
+                    <Stack.Screen name="Home" component={MainPage} />
+                    <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
     );
 }
