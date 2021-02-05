@@ -1,11 +1,17 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {createStore, applyMiddleware, compose} from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-import rootVideos from './ducks/videos';
-import rootPlayer from './ducks/player';
+import ducks from './ducks';
+import mySaga from './saga';
 
-export default configureStore({
-    reducer: {
-        videos: rootVideos,
-        player: rootPlayer,
-    },
-});
+const configStore = () => {
+    const sagaMiddleware = createSagaMiddleware();
+
+    const store = createStore(ducks, applyMiddleware(sagaMiddleware));
+
+    sagaMiddleware.run(mySaga);
+
+    return store;
+};
+
+export default configStore();

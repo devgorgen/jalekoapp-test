@@ -1,9 +1,38 @@
-import {createAction, createReducer} from '@reduxjs/toolkit';
+import {createActions, createReducer} from 'reduxsauce';
 
-const INITAL_STATE = [];
+/**
+ * Criando actions e os creators
+ */
+export const {Types, Creators} = createActions({
+    searchVideos: ['video'],
+    loadVideos: ['payload'],
+});
 
-export const addVideos = createAction('ADD_VIDEOS');
+const INITIAL_STATE = {
+    videos: [],
+    query: '',
+    nextPageToken: '',
+};
 
-export default createReducer(INITAL_STATE, {
-    [addVideos.type]: (state, action) => [...action.payload],
+const searchVideos = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        query: action.query,
+    };
+};
+
+const loadVideos = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        nextPageToken: action.payload.nextPageToken,
+        videos: action.payload.data.items,
+    };
+};
+
+/**
+ * Criando reducers
+ */
+export default createReducer(INITIAL_STATE, {
+    [Types.SEARCH_VIDEOS]: searchVideos,
+    [Types.LOAD_VIDEOS]: loadVideos,
 });

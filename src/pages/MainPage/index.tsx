@@ -8,6 +8,8 @@ import Video from 'react-native-video';
 
 import {getVideos} from '../../services/repositories';
 
+import {useSelector, useDispatch} from 'react-redux';
+
 //styled-components
 import {Container} from './styles';
 
@@ -19,34 +21,31 @@ const Item = ({title}) => (
 
 /**
  * Principal page
- * */
+ */
 const MainPage = ({navigation}) => {
-    const [data, setData] = useState([]);
+    const dispach = useDispatch();
+    const videos = useSelector(state => state.videos.videos);
+
     const videoPlayer = useRef(null);
+
+    const [data, setData] = useState([]);
+
     useEffect(() => {
-        const files = getVideos('jaleko');
-        files
-            .then(response => {
-                const videoData = [];
-                response.data.items.map(item => {
-                    const video = {
-                        id: item.id.videoId,
-                        title: item.snippet.title,
-                        description: item.snippet.description,
-                        publishTime: item.snippet.publishTime,
-                        thumbnails: item.snippet.thumbnails,
-                        chanelId: item.snippet.chanelId,
-                    };
-
-                    videoData.push(video);
-                });
-
-                setData(videoData);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, []);
+        const videoData = [];
+        videos.map(item => {
+            const video = {
+                id: item.id.videoId,
+                etag: item.etag,
+                title: item.snippet.title,
+                description: item.snippet.description,
+                publishTime: item.snippet.publishTime,
+                thumbnails: item.snippet.thumbnails,
+                chanelId: item.snippet.chanelId,
+            };
+            videoData.push(video);
+        });
+        setData(videoData);
+    }, [videos]);
 
     const navegateToVideoPlayer = imageUrl => {
         console.log(`navigate to vp with ${imageUrl}`);
@@ -54,16 +53,18 @@ const MainPage = ({navigation}) => {
     };
 
     const renderItem = ({item}) => {
-        console.log(item.thumbnails);
         return (
             <VideoCard
+                id={item.id}
+                etag={item.etag}
                 title={item.title}
                 imgUrl={item.thumbnails.medium.url}
-                id={item.id}
                 onNavigate={navegateToVideoPlayer}
             />
         );
     };
+
+    const loadRepositories = () => {};
 
     return (
         <Container>
@@ -72,6 +73,8 @@ const MainPage = ({navigation}) => {
                 data={data}
                 keyExtractor={video => String(video.id)}
                 renderItem={renderItem}
+                onEndReached={loadRepositories}
+                onEndReachedThreshold={0.2}
             />
         </Container>
     );
