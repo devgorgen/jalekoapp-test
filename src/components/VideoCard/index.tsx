@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {Container} from './styles';
 
-const VideoCard = ({id, etag, title, imgUrl, onNavigate}) => {
+const VideoCard = ({id, etag, title, imgUrl, onNavigate, index}) => {
     const dispach = useDispatch();
     const navigate = () => {
         dispach({type: 'ADD_VIDEO_PLAYER', data: {id, imgUrl, etag, title}});
@@ -14,12 +14,10 @@ const VideoCard = ({id, etag, title, imgUrl, onNavigate}) => {
     };
 
     return (
-        <Container key={`item ${id}`}>
-            <TouchableOpacity onPress={() => navigate()}>
-                <Image
-                    source={{uri: imgUrl, width: 'auto', height: 200, scale: 1}}
-                />
-            </TouchableOpacity>
+        <Container onPress={() => navigate()} key={`item ${index} ${id}`}>
+            <Image
+                source={{uri: imgUrl, width: 'auto', height: 200, scale: 1}}
+            />
             <Text>{title}</Text>
         </Container>
     );

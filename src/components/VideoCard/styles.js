@@ -1,11 +1,9 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-    background: white;
+export const Container = styled.TouchableOpacity`
     border: 1px solid black;
-    flex: 1;
     height: 250px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
 `;

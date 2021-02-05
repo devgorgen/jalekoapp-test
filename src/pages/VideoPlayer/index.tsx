@@ -3,6 +3,7 @@ import {StyleSheet, View, Platform, Text} from 'react-native';
 import YouTube from 'react-native-youtube';
 
 import {useSelector} from 'react-redux';
+import {Container} from './styles';
 
 const VideoPlayer = () => {
     const playerState = useSelector(state => state.player);
@@ -13,7 +14,7 @@ const VideoPlayer = () => {
     const videoPlayer = useRef(null);
 
     return (
-        <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+        <Container>
             <YouTube
                 ref={videoPlayer}
                 apiKey="AIzaSyCdPBJSssGgg81qB_1FbBQwyiDKB2LfkoY" //TODO: buscar do async-storage - https://reactnative.dev/docs/asyncstorage
@@ -21,7 +22,7 @@ const VideoPlayer = () => {
                 style={{alignSelf: 'stretch', height: 300}}
                 play={true}
             />
-        </View>
+        </Container>
     );
 };
 
