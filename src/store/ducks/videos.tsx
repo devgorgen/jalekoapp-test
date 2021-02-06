@@ -6,6 +6,7 @@ import {createActions, createReducer} from 'reduxsauce';
 export const {Types, Creators} = createActions({
     searchVideos: ['query'],
     loadVideos: ['payload'],
+    loadMoreVideos: ['payload'],
     loadNextPage: ['payload'],
     updateLoading: [],
 });
@@ -37,6 +38,15 @@ const loadVideos = (state = INITIAL_STATE, action) => {
         ...state,
         nextPageToken: action.payload.nextPageToken,
         isLoading: true,
+        videos: [...shapeVideos(action.payload.items)],
+    };
+};
+
+const loadMoreVideos = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        nextPageToken: action.payload.nextPageToken,
+        isLoading: true,
         videos: [...state.videos, ...shapeVideos(action.payload.items)],
     };
 };
@@ -51,6 +61,7 @@ const shapeVideos = videos => {
             publishTime: item.snippet.publishTime,
             thumbnails: item.snippet.thumbnails,
             channelId: item.snippet.channelId,
+            imgUrl: item.snippet.thumbnails.default.url,
         };
     });
     return videosShaped;
@@ -62,5 +73,6 @@ const shapeVideos = videos => {
 export default createReducer(INITIAL_STATE, {
     [Types.SEARCH_VIDEOS]: searchVideos,
     [Types.LOAD_VIDEOS]: loadVideos,
+    [Types.LOAD_MORE_VIDEOS]: loadMoreVideos,
     [Types.UPDATE_LOADING]: updateLoading,
 });

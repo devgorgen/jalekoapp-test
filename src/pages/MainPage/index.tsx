@@ -1,12 +1,26 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {View, Text, FlatList, ActivityIndicator} from 'react-native';
+import {
+    View,
+    Text,
+    FlatList,
+    ActivityIndicator,
+    Image,
+    Button,
+} from 'react-native';
 import VideoCard from '../../components/VideoCard';
-import SearchButtom from '../../components/SearchButtom';
+import SearchButton from '../../components/SearchButton';
 
 import {useSelector, useDispatch} from 'react-redux';
 
 //styled-components
-import {Container, Loading} from './styles';
+import {
+    Container,
+    Loading,
+    FooterContainer,
+    LeftBottomButton,
+    RightBottomButton,
+    BottomButton,
+} from './styles';
 
 /**
  * Principal page
@@ -51,22 +65,40 @@ const MainPage = ({navigation}) => {
     };
 
     const emptyContent = () => {
-        return <Text>JALEKOOOOO</Text>;
+        return (
+            <Container>
+                <Image
+                    style={{width: 360, height: 150}}
+                    source={require('../../assets/Tube.png')}
+                />
+            </Container>
+        );
     };
 
     return (
         <Container>
-            <SearchButtom />
+            <SearchButton />
             <FlatList
                 data={videos}
                 keyExtractor={video => String(video.id)}
-                renderItem={({item, index}) => renderItem({item})}
+                renderItem={({item, index}) => renderItem({item, index})}
                 onEndReached={loadRepositories}
                 onEndReachedThreshold={0.3}
                 ListFooterComponent={renderFooter}
                 initialNumToRender={5}
                 ListEmptyComponent={emptyContent}
             />
+            <FooterContainer>
+                <LeftBottomButton>
+                    <BottomButton title={'Favoritos'} onPress={() => {}} />
+                </LeftBottomButton>
+                <RightBottomButton>
+                    <BottomButton
+                        title={'Anotações'}
+                        onPress={() => navigation.navigate('Notes')}
+                    />
+                </RightBottomButton>
+            </FooterContainer>
         </Container>
     );
 };

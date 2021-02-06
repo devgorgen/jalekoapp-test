@@ -14,7 +14,7 @@ function* searchVideos(action) {
             console.log('without payload');
         }
     } catch (e) {
-        console.log('error');
+        console.log('error', e);
     }
 }
 
@@ -27,7 +27,7 @@ function* loadNextPage(action) {
         );
 
         if (payload) {
-            yield put({type: Types.LOAD_VIDEOS, payload: payload.data});
+            yield put({type: Types.LOAD_MORE_VIDEOS, payload: payload.data});
         } else {
             console.log('without payload');
         }

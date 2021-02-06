@@ -4,10 +4,11 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import {useDispatch} from 'react-redux';
+import {SEARCH_TEXT} from '../../utils/texts';
 
 import {Container, SearchInput} from './styles';
 
-const SearchButtom = ({}) => {
+const SearchButton = ({}) => {
     const dispach = useDispatch();
 
     const [value, setValue] = useState();
@@ -20,7 +21,7 @@ const SearchButtom = ({}) => {
         <View style={styles.SectionStyle}>
             <TextInput
                 style={styles.input}
-                placeholder="User Nickname"
+                placeholder={SEARCH_TEXT}
                 onChangeText={setValue}
                 onEndEditing={onEndEditing}
                 value={value}
@@ -64,4 +65,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SearchButtom;
+export default SearchButton;

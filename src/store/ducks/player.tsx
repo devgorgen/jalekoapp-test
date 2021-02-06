@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     etag: '',
     url: '',
     title: '',
+    imgUrl: '',
 };
 
 const addVideoPlayer = (state = INITIAL_STATE, action) => {
