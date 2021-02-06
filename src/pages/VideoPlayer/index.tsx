@@ -17,7 +17,7 @@ import {
 
 const VideoPlayer = ({navigation}) => {
     //TODO: buscar do async-storage - https://reactnative.dev/docs/asyncstorage
-    const API_KEY = 'AIzaSyDBdU7xY-cVpMYoAXzzMGiS3Gacwpz1D1M';
+    const API_KEY = 'PUT API KEY HERE'; 
 
     const dispach = useDispatch();
 
