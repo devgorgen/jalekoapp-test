@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import MainPage from './pages/MainPage';
 import VideoPlayer from './pages/VideoPlayer';
 import Notes from './pages/Notes';
+import Favorites from './pages/Favorites';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -56,6 +57,13 @@ export default function App() {
                         component={Notes}
                         options={{
                             title: 'Anotações',
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Favorites"
+                        component={Favorites}
+                        options={{
+                            title: 'Favoritos',
                         }}
                     />
                 </Stack.Navigator>

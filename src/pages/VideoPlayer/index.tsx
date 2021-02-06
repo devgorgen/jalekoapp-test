@@ -1,15 +1,21 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {FlatList, Button} from 'react-native';
-import YouTube from 'react-native-youtube';
 
 import {useSelector, useDispatch} from 'react-redux';
+import {FlatList, Button} from 'react-native';
+import YouTube from 'react-native-youtube';
 
 import VideoCard from '../../components/VideoCard';
 import NoteCard from '../../components/NoteCard';
 
-import {Container} from './styles';
+import {
+    Container,
+    FooterContainer,
+    LeftBottomButton,
+    RightBottomButton,
+    BottomButton,
+} from './styles';
 
-const VideoPlayer = () => {
+const VideoPlayer = ({navigation}) => {
     //TODO: buscar do async-storage - https://reactnative.dev/docs/asyncstorage
     const API_KEY = 'AIzaSyDBdU7xY-cVpMYoAXzzMGiS3Gacwpz1D1M';
 
@@ -48,7 +54,7 @@ const VideoPlayer = () => {
     };
 
     return (
-        <>
+        <Container>
             {!notes ? (
                 <Container>
                     <YouTube
@@ -81,7 +87,21 @@ const VideoPlayer = () => {
             ) : (
                 <NoteCard id={'32r2324'} imgUrl={playerState.imgUrl} />
             )}
-        </>
+            <FooterContainer>
+                <LeftBottomButton>
+                    <BottomButton
+                        title={'Favoritos'}
+                        onPress={() => navigation.navigate('Favorites')}
+                    />
+                </LeftBottomButton>
+                <RightBottomButton>
+                    <BottomButton
+                        title={'Anotações'}
+                        onPress={() => navigation.navigate('Notes')}
+                    />
+                </RightBottomButton>
+            </FooterContainer>
+        </Container>
     );
 };
 

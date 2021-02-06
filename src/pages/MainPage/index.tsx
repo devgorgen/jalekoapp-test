@@ -90,7 +90,10 @@ const MainPage = ({navigation}) => {
             />
             <FooterContainer>
                 <LeftBottomButton>
-                    <BottomButton title={'Favoritos'} onPress={() => {}} />
+                    <BottomButton
+                        title={'Favoritos'}
+                        onPress={() => navigation.navigate('Favorites')}
+                    />
                 </LeftBottomButton>
                 <RightBottomButton>
                     <BottomButton
