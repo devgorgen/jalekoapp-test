@@ -1,7 +1,7 @@
 // import { apiSearch, apiSuggestQuery } from "./api";
 import axios from 'axios';
 
-const API_KEY = 'AIzaSyDBdU7xY-cVpMYoAXzzMGiS3Gacwpz1D1M';
+const API_KEY = 'PU YOUR API KEY HERE';
 
 export const getVideos = async query => {
     return await axios.get(
